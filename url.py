@@ -11,6 +11,7 @@ def upload_form():
     <head>
         <title>Bindaas</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="https://i.postimg.cc/hGDHgyzD/Bindaas.png">
         <style>
             /* Disco animation for the title */
             @keyframes disco {
