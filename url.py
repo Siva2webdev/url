@@ -7,14 +7,48 @@ app = Flask(__name__)
 def upload_form():
     return '''
     <!doctype html>
-    <title>Upload user:pass File</title>
-    <h1>Upload user:pass File (pxl.txt) and Base URL</h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="url">Enter Base URL (e.g., http://king4k.one:80):</label><br>
-        <input type="text" name="url" required><br><br>
-        <input type="file" name="file" required><br><br>
-        <input type="submit" value="Upload and Generate URLs">
+<html lang="en">
+<head>
+    <title>Bindaas</title>
+</head>
+    
+<h1 style="font-size: 5em; animation: disco 1s infinite; margin-top: 10px; text-align: center;">
+    Bindaas
+</h1>
+
+<style>
+@keyframes disco {
+    0% { color: #FF0000; }   /* Red */
+    20% { color: #FF7F00; }  /* Orange */
+    40% { color: #FFFF00; }  /* Yellow */
+    60% { color: #00FF00; }  /* Green */
+    80% { color: #0000FF; }  /* Blue */
+    100% { color: #8B00FF; } /* Violet */
+}
+</style>
+
+    <h1 style="font-size: 2em; background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); -webkit-background-clip: text; color: transparent; margin-top: 10px; text-align: center;">
+    Combo to M3U Link Converter
+</h1>
+
+<body style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: Arial, sans-serif;  margin: 0; padding: 0; background-color: #000; color: #333;">
+
+    <form action="/upload" method="post" enctype="multipart/form-data" style="background-color: #f0f0f0; padding: 20px; border-radius: 8px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); width: 280px; text-align: left;">
+        <label for="url" style="font-size: 1em; font-weight: bold; color: #333;">Enter URL (http://playtv44.com:8080)</label><br>
+        <input type="text" name="url" required style="width: 100%; padding: 8px; margin: 8px 0 16px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;"><br>
+        <label for="url" style="font-size: 0.8em; font-weight: bold; color: #333;">Upload combo File Here</label><br>   
+        <input type="file" name="file" required style="margin: 8px 0 16px;"><br>
+
+        <input type="submit" value="Upload and Generate URL's" style="width: 100%; background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 4px; font-size: 1em; cursor: pointer;">
     </form>
+
+    <h2 style="font-size: 1em; color: #666; margin-top: 20px; text-align: center;">
+        Join our Telegram: <a href="https://t.me/Bindaa_ss" target="_blank" style="color: #0000FF; text-decoration: none;">https://t.me/Bindaa_ss</a>
+    </h2>
+
+</body>
+</html>
+
     '''
 
 @app.route('/upload', methods=['POST'])
