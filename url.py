@@ -1,5 +1,5 @@
-from flask import Flask, request, send_file
-import os
+from flask import Flask, request, send_file, make_response
+import io
 
 app = Flask(__name__)
 
@@ -14,12 +14,12 @@ def upload_form():
         <style>
             /* Disco animation for the title */
             @keyframes disco {
-                0% { color: #FF0000; }   /* Red */
-                20% { color: #FF7F00; }  /* Orange */
-                40% { color: #FFFF00; }  /* Yellow */
-                60% { color: #00FF00; }  /* Green */
-                80% { color: #0000FF; }  /* Blue */
-                100% { color: #8B00FF; } /* Violet */
+                0% { color: #FF0000; }
+                20% { color: #FF7F00; }
+                40% { color: #FFFF00; }
+                60% { color: #00FF00; }
+                80% { color: #0000FF; }
+                100% { color: #8B00FF; }
             }
 
             /* Responsive page layout */
@@ -50,7 +50,6 @@ def upload_form():
                 margin-top: 20px;
             }
 
-            /* Responsive form styling */
             form {
                 background-color: #f0f0f0;
                 padding: 20px;
@@ -93,7 +92,6 @@ def upload_form():
                 text-decoration: none;
             }
 
-            /* Adjust font sizes and layout for smaller screens */
             @media (max-width: 600px) {
                 h1 {
                     font-size: 2.5em;
@@ -138,34 +136,32 @@ def upload_file():
     base_url = request.form['url']
     if file.filename == '':
         return "No selected file."
-    
-    if file:
-        # Save the uploaded file
-        input_path = 'pxl.txt'
-        file.save(input_path)
-        
-        # Process the file to generate URLs
-        output_path = 'output_urls.txt'
-        with open(input_path, 'r') as infile, open(output_path, 'w') as outfile:
-            for line in infile:
-                line = line.strip()
-                if ':' in line:
-                    user, password = line.split(':', 1)
-                    url = f"{base_url}/get.php?username={user}&password={password}&type=m3u_plus"
-                    outfile.write(url + '\n')
-        
-        # Provide a download link for the output file
-        return '''
-        <h2>URLs generated successfully!</h2>
-        <a href="/download">Download output file</a>
-        '''
-    
-    return "File processing failed."
 
-@app.route('/download')
-def download_file():
-    output_path = 'output_urls.txt'
-    return send_file(output_path, as_attachment=True)
+    if file:
+        # Use in-memory buffer instead of saving to disk
+        output_buffer = io.StringIO()
+
+        # Process the uploaded file to generate URLs
+        for line in file.stream:
+            line = line.decode().strip()
+            if ':' in line:
+                user, password = line.split(':', 1)
+                url = f"{base_url}/get.php?username={user}&password={password}&type=m3u_plus"
+                output_buffer.write(url + '\n')
+
+        # Move buffer pointer to start
+        output_buffer.seek(0)
+
+        # Send the buffer as a downloadable file
+        response = make_response(send_file(
+            io.BytesIO(output_buffer.getvalue().encode()),
+            as_attachment=True,
+            download_name="output_urls.txt",
+            mimetype="text/plain"
+        ))
+        return response
+
+    return "File processing failed."
 
 if __name__ == '__main__':
     app.run(debug=True)
