@@ -22,6 +22,14 @@ def upload_form():
                 80% { color: #0000FF; }
                 100% { color: #8B00FF; }
             }
+            @keyframes disco1 {
+                0% { color: #FF0000; }
+                20% { color: #FF7F00; }
+                40% { color: #515103; }
+                60% { color: #090909; }
+                80% { color: #0000FF; }
+                100% { color: #8B00FF; }
+            }
 
             /* Responsive page layout */
             body {
@@ -34,7 +42,7 @@ def upload_form():
                 margin: 0;
                 padding: 0;
                 background-color: #000;
-                color: #333;
+                color: #fff;
             }
 
             h1 {
@@ -121,9 +129,10 @@ def upload_form():
             <input type="file" name="file" required><br>
             <input type="submit" value="Upload and Generate URLs">
         </form>
-        <h2>
-            Join our Telegram: <a href="https://t.me/Bindaa_ss" target="_blank">https://t.me/Bindaa_ss</a>
-        </h2>
+        <span style="display: flex; align-items: center; gap: 10px;">
+            <h4>Telegram: <a style="animation: disco1 0.5s infinite;" href="https://t.me/Bindaa_ss" target="_blank">Join</a></h4>
+            <h4>M3U Status Checker: <a style="animation: disco1 0.5s infinite;" href="https://m3uhost.vercel.app/" target="_blank">Click Here</a></h4>
+        </span>
     </body>
     </html>
     '''
